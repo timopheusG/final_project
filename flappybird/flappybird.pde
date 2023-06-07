@@ -60,9 +60,9 @@ void reset() {
 void keyPressed() {
   if (keyCode == UP && status == 1) {
     birdYSpeed = -7;
-    currentTime = millis();
-    bird = tilt;
-    drawBird();
+    currentTime = millis(); //sets current time
+    bird = tilt; //changes bird image to that of the up tilted state
+    drawBird(); 
   } else if (key == 'a' && status == 0) {
     status = 1;
   } else if (key == 'a' && status == 2) {
@@ -83,16 +83,14 @@ void drawBird() {
 }
 void drawPipes() {
   fill(55, 182, 0);
-  rect(pipeX, 0, pipeWidth, pipeHeight);
-  rect(pipeX, pipeHeight + pipeGap, pipeWidth, height - pipeHeight - pipeGap);
+  rect(pipeX, 0, pipeWidth, pipeHeight );
+  rect(pipeX, pipeHeight + pipeGap, pipeWidth, height - pipeHeight - pipeGap ); //pipe drawing
 }
 void updateBird() {
-  birdYSpeed += 0.3 * gravity;
+  birdYSpeed += 0.3 * gravity; //incremenetal falling of the bird, operating always under condition of status = 1, the play status
   birdY += birdYSpeed;
   
-  if (birdY > height || birdY < 0) {
-    status = 2;
-  }
+
 }
 
 void updatePipes() {
@@ -100,27 +98,22 @@ void updatePipes() {
   
   if (pipeX < -pipeWidth) {
     pipeX = width;
-    pipeHeight = int(random(100, height - 100));
+    pipeHeight = int(random(100, height - 100)); //random generation of the height of the pipe
     scored = false;
   }
   
-//  if (get(
-  
-//  if (pipeX < width/2 && !scored) {
-//    score++;
-//    scored = true;
-//  }
+
 }
 
 void checkCollision() {
-  if (birdY > height || birdY < 0) {
+  if (birdY > height || birdY < 0) { //edge hitting gameover mechanism
     status = 2;
     if (score > best){
     best = score;
     }
   }  
-  if (pipeX < 120){
-    if(birdY < pipeHeight -5 || birdY > pipeHeight + pipeGap -50){
+  if (pipeX < 120){//checkign if the pipe has transited the x coordinate of the bird
+    if(birdY < pipeHeight -5 || birdY > pipeHeight + pipeGap -50 ){ //checkign if the pipe has transited the y coordinate of the bird
       status = 2;
       if (score > best){
       best = score;
@@ -130,7 +123,7 @@ void checkCollision() {
   }
 } 
 void addScore() {
-  if (pipeX < 50  && pipeX > 50 - pipeSpeed){
+  if (pipeX < 50  && pipeX > 50 - pipeSpeed){ //checkign if the pipe has transited the x coordinate of the bird, then adding score
 //    if(birdY < pipeHeight - 10 || birdY > pipeHeight + pipeGap + 10){
   print("hello");
       score++;

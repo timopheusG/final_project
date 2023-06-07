@@ -5,7 +5,9 @@ int status;
 float gravity = 1.2;
 PImage bg;
 PImage bird;
+PImage tilt;
 int best;
+int currentTime;
 
 int pipeX;
 int pipeGap;
@@ -18,7 +20,8 @@ void setup() {
   size(400, 600);
   reset();
   bg = loadImage("background.jpg");
-  
+  bird = loadImage("bird.png");
+  tilt = loadImage("uptilt.png");
 }
 
 void draw() {
@@ -57,6 +60,9 @@ void reset() {
 void keyPressed() {
   if (keyCode == UP && status == 1) {
     birdYSpeed = -7;
+    currentTime = millis();
+    bird = tilt;
+    drawBird();
   } else if (key == 'a' && status == 0) {
     status = 1;
   } else if (key == 'a' && status == 2) {
@@ -66,11 +72,15 @@ void keyPressed() {
 
 void drawBird() {
 //  fill(255, 255, 0);
+  if (millis() - currentTime > 470){
   bird = loadImage("bird.png");
   image(bird, 50, birdY);
+  }
+  else{
+    image(bird,50,birdY);
 //  ellipse(50, birdY, 32, 32);
 }
-
+}
 void drawPipes() {
   fill(55, 182, 0);
   rect(pipeX, 0, pipeWidth, pipeHeight);
@@ -123,9 +133,7 @@ void addScore() {
   if (pipeX < 50  && pipeX > 50 - pipeSpeed){
 //    if(birdY < pipeHeight - 10 || birdY > pipeHeight + pipeGap + 10){
   print("hello");
-      scored = true;
       score++;
-      scored = false;
       if (score > best) {
         best++;
       }
